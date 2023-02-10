@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone_contacts/misc/functions.dart';
 import 'package:timezone_contacts/ui/widgets/time_display.dart';
 
-class TimezoneSelectScreen extends StatelessWidget {
+class TimezoneSelectScreen extends StatefulWidget {
   final Function(String value) onSelect;
 
   const TimezoneSelectScreen({
     super.key,
     required this.onSelect,
   });
+
+  @override
+  State<TimezoneSelectScreen> createState() => _TimezoneSelectScreenState();
+}
+
+class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
+  int? filterOffset;
+
+  String searchQuery = '';
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,25 +34,98 @@ class TimezoneSelectScreen extends StatelessWidget {
       (a, b) => a.currentTimeZone.offset.compareTo(b.currentTimeZone.offset),
     );
 
+    List<int> allOffsets = locations
+        .map(
+          (e) => e.currentTimeZone.offset,
+        )
+        .toSet()
+        .toList();
+
+    if (filterOffset != null) {
+      locations = locations
+          .where((element) => element.currentTimeZone.offset == filterOffset)
+          .toList();
+    }
+
+    if (searchQuery.trim() != '') {
+      locations = locations.where(
+        (element) {
+          var slashPos = element.name.lastIndexOf('/');
+          String locationGroupName = (slashPos != -1)
+              ? element.name.substring(0, slashPos)
+              : element.name;
+          locationGroupName = locationGroupName.replaceAll('_', ' ');
+
+          String locationName = (slashPos != -1)
+              ? element.name.substring(slashPos + 1)
+              : element.name;
+          locationName = locationName.replaceAll('_', ' ');
+
+          return locationName
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase().trim()) ||
+              locationGroupName
+                  .toLowerCase()
+                  .contains(searchQuery.toLowerCase().trim());
+        },
+      ).toList();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Time Zone'),
       ),
-      body: StreamBuilder(
-        stream: Stream.periodic(const Duration(seconds: 5)),
-        builder: (context, snapshot) {
-          return ListView.separated(
-            itemBuilder: (context, index) {
-              final location = locations[index];
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: buildSearchField(),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: DropdownButton<int>(
+                    hint: const Text('UTC offset'),
+                    isExpanded: true,
+                    value: filterOffset,
+                    items: allOffsets.map((int value) {
+                      return DropdownMenuItem<int>(
+                        value: value,
+                        child: Text(locationOffsetToString(value)),
+                      );
+                    }).toList(),
+                    onChanged: (int? value) {
+                      setState(() {
+                        filterOffset = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: StreamBuilder(
+              stream: Stream.periodic(const Duration(seconds: 5)),
+              builder: (context, snapshot) {
+                return ListView.separated(
+                  itemBuilder: (context, index) {
+                    final location = locations[index];
 
-              return buildLocationItem(context, location);
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(height: 5.0);
-            },
-            itemCount: locations.length,
-          );
-        },
+                    return buildLocationItem(context, location);
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 5.0);
+                  },
+                  itemCount: locations.length,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -54,29 +143,11 @@ class TimezoneSelectScreen extends StatelessWidget {
         : location.name;
     locationName = locationName.replaceAll('_', ' ');
 
-    final timezoneOffset =
-        location.currentTimeZone.offset / Duration.millisecondsPerHour;
-
-    final offsetDiffHours = timezoneOffset.abs().floor();
-    final offsetDiffMinutes =
-        ((timezoneOffset.abs() - offsetDiffHours) * 60).floor();
-
-    String sign;
-
-    if (timezoneOffset < 0) {
-      sign = '-';
-    } else {
-      sign = '+';
-    }
-
-    final offsetText = 'GMT'
-        '$sign${offsetDiffHours.toString()}'
-        ':'
-        '${offsetDiffMinutes.toString().padLeft(2, '0')}';
+    final offsetText = locationOffsetToString(location.currentTimeZone.offset);
 
     return GestureDetector(
       onTap: () {
-        onSelect(location.name);
+        widget.onSelect(location.name);
 
         if (Navigator.canPop(context)) {
           Navigator.pop(context);
@@ -123,6 +194,41 @@ class TimezoneSelectScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildSearchField() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: searchController,
+              onSubmitted: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+                searchController.text = value;
+              },
+              textInputAction: TextInputAction.search,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                hintText: 'Search',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                contentPadding: const EdgeInsets.only(
+                  top: 0.0,
+                  bottom: 0.0,
+                  left: 10.0,
+                  right: 5.0,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
