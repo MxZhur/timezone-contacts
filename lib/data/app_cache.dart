@@ -1,6 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/standalone.dart' as tz;
 
+class In24HoursFormatSetting {
+  static const off = 0;
+  static const on = 1;
+  static const system = 2;
+}
+
+class DarkMode {
+  static const off = 0;
+  static const on = 1;
+  static const system = 2;
+}
+
 class AppCache {
   static const kReferenceTimeZone = 'refTimeZone';
   static const kDarkMode = 'darkMode';
@@ -27,23 +39,23 @@ class AppCache {
     }
   }
 
-  Future<bool> darkMode() async {
+  Future<int> darkMode() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(kDarkMode) ?? false;
+    return prefs.getInt(kDarkMode) ?? DarkMode.system;
   }
 
-  Future<void> setDarkMode(bool enabled) async {
+  Future<void> setDarkMode(int mode) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(kDarkMode, enabled);
+    await prefs.setInt(kDarkMode, mode);
   }
 
-  Future<bool> timeIn24HoursFormat() async {
+  Future<int> timeIn24HoursFormat() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(kTimeIn24HoursFormat) ?? false;
+    return prefs.getInt(kTimeIn24HoursFormat) ?? In24HoursFormatSetting.system;
   }
 
-  Future<void> setTimeIn24HoursFormat(bool enabled) async {
+  Future<void> setTimeIn24HoursFormat(int mode) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(kTimeIn24HoursFormat, enabled);
+    await prefs.setInt(kTimeIn24HoursFormat, mode);
   }
 }

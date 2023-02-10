@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone_contacts/data/app_cache.dart';
 
 import 'package:timezone_contacts/data/app_state_manager.dart';
 import 'package:timezone_contacts/data/repositories/repository.dart';
@@ -55,10 +57,24 @@ class _TimezoneContactsAppState extends State<TimezoneContactsApp> {
       child: Consumer<AppStateManager>(
         builder: (context, appStateManager, child) {
           ThemeData theme;
-          if (appStateManager.darkMode) {
-            theme = AppTheme.dark();
-          } else {
-            theme = AppTheme.light();
+          switch (appStateManager.darkMode) {
+            case DarkMode.on:
+              theme = AppTheme.dark();
+              break;
+            case DarkMode.off:
+              theme = AppTheme.light();
+              break;
+            case DarkMode.system:
+              var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;;
+              if (brightness == Brightness.dark) {
+                theme = AppTheme.dark();
+              } else {
+                theme = AppTheme.light();
+              }
+              break;
+            default:
+              theme = AppTheme.light();
+              break;
           }
 
           return MaterialApp(

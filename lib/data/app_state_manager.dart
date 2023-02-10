@@ -10,16 +10,16 @@ import './app_cache.dart';
 class AppStateManager extends ChangeNotifier {
   DateTime? _referenceTime;
   tz.Location? _referenceTimeZone;
-  bool _darkMode = false;
-  bool _timeIn24HoursFormat = false;
+  int _darkMode = DarkMode.system;
+  int _timeIn24HoursFormat = In24HoursFormatSetting.system;
 
   final _appCache = AppCache();
 
   // Property getters.
   DateTime? get referenceTime => _referenceTime;
   tz.Location? get referenceTimeZone => _referenceTimeZone;
-  bool get darkMode => _darkMode;
-  bool get timeIn24HoursFormat => _timeIn24HoursFormat;
+  int get darkMode => _darkMode;
+  int get timeIn24HoursFormat => _timeIn24HoursFormat;
 
   // Initializes the app
   Future<void> initializeApp() async {
@@ -54,15 +54,15 @@ class AppStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDarkMode(bool enabled) async {
-    _darkMode = enabled;
-    await _appCache.setDarkMode(enabled);
+  void setDarkMode(int mode) async {
+    _darkMode = mode;
+    await _appCache.setDarkMode(mode);
     notifyListeners();
   }
 
-  void setTimeIn24HoursFormat(bool enabled) async {
-    _timeIn24HoursFormat = enabled;
-    await _appCache.setTimeIn24HoursFormat(enabled);
+  void setTimeIn24HoursFormat(int mode) async {
+    _timeIn24HoursFormat = mode;
+    await _appCache.setTimeIn24HoursFormat(mode);
     notifyListeners();
   }
 }

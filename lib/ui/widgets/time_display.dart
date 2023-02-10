@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone_contacts/data/app_cache.dart';
 import 'package:timezone_contacts/data/app_state_manager.dart';
 
 class TimeDisplay extends StatelessWidget {
@@ -19,7 +20,21 @@ class TimeDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AppStateManager>(
       builder: (context, appStateManager, child) {
-        final in24HoursFormat = appStateManager.timeIn24HoursFormat;
+        bool in24HoursFormat = false;
+
+        switch (appStateManager.timeIn24HoursFormat) {
+          case In24HoursFormatSetting.system:
+            in24HoursFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+            break;
+          case In24HoursFormatSetting.on:
+            in24HoursFormat = true;
+            break;
+          case In24HoursFormatSetting.off:
+            in24HoursFormat = false;
+            break;
+          default:
+            break;
+        }
 
         if (in24HoursFormat) {
           return Center(

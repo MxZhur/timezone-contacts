@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone_contacts/data/app_cache.dart';
 import 'package:timezone_contacts/data/app_state_manager.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -21,11 +22,28 @@ class SettingsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text('Dark Mode'),
-                  Switch(
+                  DropdownButton<int>(
                     value: appStateManager.darkMode,
-                    onChanged: (value) {
+                    onChanged: (int? value) {
+                      if (value == null) {
+                        return;
+                      }
                       appStateManager.setDarkMode(value);
                     },
+                    items: const [
+                      DropdownMenuItem<int>(
+                        value: DarkMode.system,
+                        child: Text('System'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: DarkMode.off,
+                        child: Text('Off'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: DarkMode.on,
+                        child: Text('On'),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -33,12 +51,30 @@ class SettingsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('24-hour time format'),
-                  Switch(
+                  const Text('12/24-hour time format'),
+
+                  DropdownButton<int>(
                     value: appStateManager.timeIn24HoursFormat,
-                    onChanged: (value) {
+                    onChanged: (int? value) {
+                      if (value == null) {
+                        return;
+                      }
                       appStateManager.setTimeIn24HoursFormat(value);
                     },
+                    items: const [
+                      DropdownMenuItem<int>(
+                        value: In24HoursFormatSetting.system,
+                        child: Text('System'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: In24HoursFormatSetting.off,
+                        child: Text('12 hours'),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: In24HoursFormatSetting.on,
+                        child: Text('24 hours'),
+                      ),
+                    ],
                   ),
                 ],
               ),
