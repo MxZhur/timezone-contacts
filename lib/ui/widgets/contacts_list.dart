@@ -66,19 +66,22 @@ class _ContactsListState extends State<ContactsList> {
                   if (contacts.isEmpty) {
                     return Center(
                       child: Opacity(
-                        opacity: 0.6,
+                        opacity: 0.35,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.contacts,
-                              size: 150.0,
+                              size: 75.0,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20.0,
                             ),
-                            Text('No contacts found.'),
+                            Text(
+                              'No contacts found.',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                           ],
                         ),
                       ),
