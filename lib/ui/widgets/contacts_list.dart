@@ -50,7 +50,8 @@ class _ContactsListState extends State<ContactsList> {
 
         if (searchQuery.trim().isNotEmpty) {
           contacts = contacts
-              .where((element) => element.name.contains(searchQuery.trim()))
+              .where((element) =>
+                  element.name.toLowerCase().contains(searchQuery.trim()))
               .toList();
         }
 
