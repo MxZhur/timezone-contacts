@@ -74,18 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ];
               },
             ),
-
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) => const SettingsScreen(),
-            //       ),
-            //     );
-            //   },
-            //   child: const Icon(Icons.settings),
-            // ),
           ),
         ],
       ),
