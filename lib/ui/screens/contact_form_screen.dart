@@ -75,38 +75,46 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
               padding: const EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
+                  _formKey.currentState!.save();
 
+                  if (!_formKey.currentState!.validate()) {
                     final formValues = _formKey.currentState!.value;
 
-                    saveImage(formValues['image']).then(
-                      (finalImagePath) {
-                        if (widget.contact == null) {
-                          final newContact = Contact(
-                            name: formValues['name'],
-                            timezone: formValues['timezone'],
-                            image: finalImagePath,
-                          );
-
-                          repository.addContact(newContact);
-                        } else {
-                          final updatedContact = Contact(
-                            id: widget.contact!.id,
-                            name: formValues['name'],
-                            timezone: formValues['timezone'],
-                            image: finalImagePath,
-                          );
-
-                          repository.updateContact(updatedContact);
-                        }
-
-                        if (Navigator.canPop(context)) {
-                          Navigator.pop(context);
-                        }
-                      },
-                    );
+                    if (formValues['timezone'] == null || formValues['timezone'].isEmpty) {
+                      _formKey.currentState!.fields['timezone']!.didChange(null);
+                    }
+                    
+                    return;
                   }
+
+                  final formValues = _formKey.currentState!.value;
+
+                  saveImage(formValues['image']).then(
+                    (finalImagePath) {
+                      if (widget.contact == null) {
+                        final newContact = Contact(
+                          name: formValues['name'],
+                          timezone: formValues['timezone'],
+                          image: finalImagePath,
+                        );
+
+                        repository.addContact(newContact);
+                      } else {
+                        final updatedContact = Contact(
+                          id: widget.contact!.id,
+                          name: formValues['name'],
+                          timezone: formValues['timezone'],
+                          image: finalImagePath,
+                        );
+
+                        repository.updateContact(updatedContact);
+                      }
+
+                      if (Navigator.canPop(context)) {
+                        Navigator.pop(context);
+                      }
+                    },
+                  );
                 },
                 child: const Icon(
                   Icons.check,
@@ -231,7 +239,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         errorText: (field.value == null)
-                            ? 'Please select time zone'
+                            ? 'Please select the time zone.'
                             : null),
                     child: GestureDetector(
                       onTap: () {
@@ -246,7 +254,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                           ),
                         );
                       },
-                      child: Text(field.value ?? 'Not set'),
+                      child: Text(field.value ?? ''),
                     ),
                   );
                 },
