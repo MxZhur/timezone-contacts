@@ -34,12 +34,13 @@ class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
       (a, b) => a.currentTimeZone.offset.compareTo(b.currentTimeZone.offset),
     );
 
-    List<int> allOffsets = locations
+    List<int?> allOffsets = [null];
+
+    allOffsets.addAll(locations
         .map(
           (e) => e.currentTimeZone.offset,
         )
-        .toSet()
-        .toList();
+        .toSet());
 
     if (filterOffset != null) {
       locations = locations
@@ -87,12 +88,19 @@ class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: DropdownButton<int>(
+                  child: DropdownButton<int?>(
                     hint: const Text('UTC offset'),
                     isExpanded: true,
                     value: filterOffset,
-                    items: allOffsets.map((int value) {
-                      return DropdownMenuItem<int>(
+                    items: allOffsets.map((int? value) {
+                      if (value == null) {
+                        return DropdownMenuItem<int?>(
+                          value: value,
+                          child: const Text('All offsets'),
+                        );
+                      }
+
+                      return DropdownMenuItem<int?>(
                         value: value,
                         child: Text(locationOffsetToString(value)),
                       );
@@ -206,15 +214,28 @@ class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
           Expanded(
             child: TextField(
               controller: searchController,
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value;
+                });
+              },
               onSubmitted: (value) {
                 setState(() {
                   searchQuery = value;
                 });
-                searchController.text = value;
               },
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchQuery = '';
+                    });
+                    searchController.text = '';
+                  },
+                  child: const Icon(Icons.backspace),
+                ),
                 hintText: 'Search',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
