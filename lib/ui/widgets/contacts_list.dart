@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/standalone.dart';
 import 'package:timezone_contacts/data/repositories/repository.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import './contacts_list_item.dart';
 import '../../data/models/contact.dart';
 
@@ -79,7 +80,7 @@ class _ContactsListState extends State<ContactsList> {
                               height: 20.0,
                             ),
                             Text(
-                              'No contacts found.',
+                              AppLocalizations.of(context)!.messageNoContactsFound,
                               style: Theme.of(context).textTheme.bodyText1,
                             ),
                           ],
@@ -127,7 +128,7 @@ class _ContactsListState extends State<ContactsList> {
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: 'Search',
+                hintText: AppLocalizations.of(context)!.hintSearch,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),

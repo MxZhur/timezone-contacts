@@ -1,0 +1,41 @@
+{
+  "labelVersion": "Версия",
+
+  "titleSelectTimeZone": "Выбор часового пояса",
+  "titleNewContact": "Новый контакт",
+  "titleUpdateContact": "Обновить контакт",
+  "labelSettings": "Настройки",
+  "labelAbout": "О приложении",
+
+  "labelMyLocalTime": "Моё время",
+
+  "titleSelectImageSource": "Выберите источник",
+  "messageSelectImageSource": "Откуда вы хотите взять изображение?",
+
+  "labelCamera": "Камера",
+  "labelGallery": "Галерея",
+
+  "fieldLabelContactName": "Имя",
+  "fieldLabelContactTimeZone": "Часовой пояс",
+
+  "messageNoContactsFound": "Контакты не найдены.",
+  "messageRefTimeReset": "Возвращено к реальному времени.",
+
+  "labelUtcOffset": "UTC-смещение",
+
+  "optionAllOffsets": "Все",
+
+  "optionSystemSettings": "Как в системе",
+  "option12Hours": "12 часов",
+  "option24Hours": "24 часа",
+  "optionLightTheme": "Светлая",
+  "optionDarkTheme": "Тёмная",
+
+  "settingsLabelTheme": "Тема",
+  "settingsLabelTimeFormat": "Формат времени",
+
+  "hintSearch": "Поиск",
+
+  "errorTextRequired": "Обязательное поле.",
+  "errorTimeZoneRequired": "Выберите часовой пояс."
+}

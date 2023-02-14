@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tzdata;
 
@@ -23,7 +22,6 @@ class AppStateManager extends ChangeNotifier {
 
   // Initializes the app
   Future<void> initializeApp() async {
-    initializeDateFormatting(Platform.localeName);
     tzdata.initializeTimeZones();
 
     // Check if the user is logged in

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:timezone_contacts/ui/screens/screens.dart';
@@ -62,14 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
               },
               itemBuilder: (BuildContext context) {
-                return const [
+                return [
                   PopupMenuItem(
                     value: 'settings',
-                    child: Text("Settings"),
+                    child: Text(
+                      AppLocalizations.of(context)!.labelSettings,
+                    ),
                   ),
                   PopupMenuItem(
                     value: 'about',
-                    child: Text("About"),
+                    child: Text(
+                      AppLocalizations.of(context)!.labelAbout,
+                    ),
                   )
                 ];
               },

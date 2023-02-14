@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:timezone_contacts/misc/functions.dart';
 import 'package:timezone_contacts/ui/widgets/time_display.dart';
 
@@ -74,7 +75,9 @@ class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Time Zone'),
+        title: Text(
+          AppLocalizations.of(context)!.titleSelectTimeZone,
+        ),
       ),
       body: Column(
         children: [
@@ -89,14 +92,18 @@ class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
                 Expanded(
                   flex: 1,
                   child: DropdownButton<int?>(
-                    hint: const Text('UTC offset'),
+                    hint: Text(
+                      AppLocalizations.of(context)!.labelUtcOffset,
+                    ),
                     isExpanded: true,
                     value: filterOffset,
                     items: allOffsets.map((int? value) {
                       if (value == null) {
                         return DropdownMenuItem<int?>(
                           value: value,
-                          child: const Text('All offsets'),
+                          child: Text(
+                            AppLocalizations.of(context)!.optionAllOffsets,
+                          ),
                         );
                       }
 
@@ -236,7 +243,7 @@ class _TimezoneSelectScreenState extends State<TimezoneSelectScreen> {
                   },
                   child: const Icon(Icons.backspace),
                 ),
-                hintText: 'Search',
+                hintText: AppLocalizations.of(context)!.hintSearch,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(50),
                 ),

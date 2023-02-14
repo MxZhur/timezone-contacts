@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,11 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(editMode ? 'Edit Contact' : 'New Contact'),
+        title: Text(
+          editMode
+              ? AppLocalizations.of(context)!.titleUpdateContact
+              : AppLocalizations.of(context)!.titleNewContact,
+        ),
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 20.0),
@@ -80,10 +85,12 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                   if (!_formKey.currentState!.validate()) {
                     final formValues = _formKey.currentState!.value;
 
-                    if (formValues['timezone'] == null || formValues['timezone'].isEmpty) {
-                      _formKey.currentState!.fields['timezone']!.didChange(null);
+                    if (formValues['timezone'] == null ||
+                        formValues['timezone'].isEmpty) {
+                      _formKey.currentState!.fields['timezone']!
+                          .didChange(null);
                     }
-                    
+
                     return;
                   }
 
@@ -145,19 +152,28 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                               await showDialog<ImageSource?>(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('Select Source'),
-                              content: const Text(
-                                  'Where do you want to pick the image from?'),
+                              title: Text(
+                                AppLocalizations.of(context)!
+                                    .titleSelectImageSource,
+                              ),
+                              content: Text(
+                                AppLocalizations.of(context)!
+                                    .messageSelectImageSource,
+                              ),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () => Navigator.pop(
                                       context, ImageSource.camera),
-                                  child: const Text('Camera'),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.labelCamera,
+                                  ),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(
                                       context, ImageSource.gallery),
-                                  child: const Text('Gallery'),
+                                  child: Text(
+                                    AppLocalizations.of(context)!.labelGallery,
+                                  ),
                                 ),
                               ],
                             ),
@@ -200,7 +216,8 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                       name: 'name',
                       initialValue: widget.contact?.name ?? '',
                       decoration: InputDecoration(
-                        labelText: 'Name',
+                        labelText:
+                            AppLocalizations.of(context)!.fieldLabelContactName,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
@@ -213,7 +230,8 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                       },
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
-                          return 'Please enter some text';
+                          return AppLocalizations.of(context)!
+                              .errorTextRequired;
                         }
                         return null;
                       },
@@ -227,19 +245,21 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
                 initialValue: widget.contact?.timezone ?? '',
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please select the time zone.';
+                    return AppLocalizations.of(context)!.errorTimeZoneRequired;
                   }
                   return null;
                 },
                 builder: (FormFieldState<dynamic> field) {
                   return InputDecorator(
                     decoration: InputDecoration(
-                        labelText: 'Time Zone',
+                        labelText: AppLocalizations.of(context)!
+                            .fieldLabelContactTimeZone,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                         errorText: (field.value == null)
-                            ? 'Please select the time zone.'
+                            ? AppLocalizations.of(context)!
+                                .errorTimeZoneRequired
                             : null),
                     child: GestureDetector(
                       onTap: () {

@@ -1,0 +1,41 @@
+{
+  "labelVersion": "Version",
+
+  "titleSelectTimeZone": "Select Time Zone",
+  "titleNewContact": "New Contact",
+  "titleUpdateContact": "Update Contact",
+  "labelSettings": "Settings",
+  "labelAbout": "About",
+
+  "labelMyLocalTime": "My Local Time",
+
+  "titleSelectImageSource": "Select Source",
+  "messageSelectImageSource": "Where do you want to pick the image from?",
+
+  "labelCamera": "Camera",
+  "labelGallery": "Gallery",
+
+  "fieldLabelContactName": "Name",
+  "fieldLabelContactTimeZone": "Time Zone",
+
+  "messageNoContactsFound": "No contacts found.",
+  "messageRefTimeReset": "Reference time reset.",
+
+  "labelUtcOffset": "UTC Offset",
+
+  "optionAllOffsets": "All Offsets",
+
+  "optionSystemSettings": "System",
+  "option12Hours": "12 Hours",
+  "option24Hours": "24 Hours",
+  "optionLightTheme": "Light",
+  "optionDarkTheme": "Dark",
+
+  "settingsLabelTheme": "Theme",
+  "settingsLabelTimeFormat": "Time Format",
+
+  "hintSearch": "Search",
+
+  "errorTextRequired": "Please enter some text.",
+  "errorTimeZoneRequired": "Please select the time zone."
+}

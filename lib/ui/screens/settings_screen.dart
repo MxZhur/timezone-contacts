@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone_contacts/data/app_cache.dart';
 import 'package:timezone_contacts/data/app_state_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -10,7 +11,9 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(
+          AppLocalizations.of(context)!.labelSettings,
+        ),
       ),
       body: Consumer<AppStateManager>(
         builder: (context, appStateManager, child) {
@@ -21,7 +24,10 @@ class SettingsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('Dark Mode'),
+                  Text(
+                    AppLocalizations.of(context)!.settingsLabelTheme,
+                  ),
+
                   DropdownButton<int>(
                     value: appStateManager.darkMode,
                     onChanged: (int? value) {
@@ -30,18 +36,24 @@ class SettingsScreen extends StatelessWidget {
                       }
                       appStateManager.setDarkMode(value);
                     },
-                    items: const [
+                    items: [
                       DropdownMenuItem<int>(
                         value: DarkMode.system,
-                        child: Text('System'),
+                        child: Text(
+                          AppLocalizations.of(context)!.optionSystemSettings,
+                        ),
                       ),
                       DropdownMenuItem<int>(
                         value: DarkMode.off,
-                        child: Text('Off'),
+                        child: Text(
+                          AppLocalizations.of(context)!.optionLightTheme,
+                        ),
                       ),
                       DropdownMenuItem<int>(
                         value: DarkMode.on,
-                        child: Text('On'),
+                        child: Text(
+                          AppLocalizations.of(context)!.optionDarkTheme,
+                        ),
                       ),
                     ],
                   ),
@@ -51,7 +63,9 @@ class SettingsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('12/24-hour time format'),
+                  Text(
+                    AppLocalizations.of(context)!.settingsLabelTimeFormat,
+                  ),
 
                   DropdownButton<int>(
                     value: appStateManager.timeIn24HoursFormat,
@@ -61,18 +75,24 @@ class SettingsScreen extends StatelessWidget {
                       }
                       appStateManager.setTimeIn24HoursFormat(value);
                     },
-                    items: const [
+                    items: [
                       DropdownMenuItem<int>(
                         value: In24HoursFormatSetting.system,
-                        child: Text('System'),
+                        child: Text(
+                          AppLocalizations.of(context)!.optionSystemSettings,
+                        ),
                       ),
                       DropdownMenuItem<int>(
                         value: In24HoursFormatSetting.off,
-                        child: Text('12 hours'),
+                        child: Text(
+                          AppLocalizations.of(context)!.option12Hours,
+                        ),
                       ),
                       DropdownMenuItem<int>(
                         value: In24HoursFormatSetting.on,
-                        child: Text('24 hours'),
+                        child: Text(
+                          AppLocalizations.of(context)!.option24Hours,
+                        ),
                       ),
                     ],
                   ),

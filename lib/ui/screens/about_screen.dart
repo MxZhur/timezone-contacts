@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -11,7 +12,9 @@ class AboutScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About'),
+        title: Text(
+          AppLocalizations.of(context)!.labelAbout,
+        ),
       ),
       body: ListView(
         children: [
@@ -41,7 +44,8 @@ class AboutScreen extends StatelessWidget {
                   ),
                   Center(
                     child: Text(
-                      'Version ${packageInfo.version} (${packageInfo.buildNumber})',
+                      '${AppLocalizations.of(context)!.labelVersion} '
+                      '${packageInfo.version} (${packageInfo.buildNumber})',
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),

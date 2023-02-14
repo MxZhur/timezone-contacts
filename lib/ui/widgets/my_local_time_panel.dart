@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/standalone.dart' as tz;
 import 'package:timezone_contacts/data/app_state_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import './time_display.dart';
+
 
 class MyLocalTimePanel extends StatelessWidget {
   final tz.Location? referenceTimeZone;
@@ -34,9 +36,9 @@ class MyLocalTimePanel extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'My Local Time',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)!.labelMyLocalTime,
+                          style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -71,8 +73,10 @@ class MyLocalTimePanel extends StatelessWidget {
                                   .resetReferenceTime();
 
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Reference time reset.'),
+                                SnackBar(
+                                  content: Text(
+                                    AppLocalizations.of(context)!.messageRefTimeReset,
+                                  ),
                                 ),
                               );
                             },
