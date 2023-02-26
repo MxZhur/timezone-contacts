@@ -68,7 +68,7 @@ class _TimezoneContactsAppState extends State<TimezoneContactsApp> {
               theme = AppTheme.light();
               break;
             case DarkMode.system:
-              var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;;
+              var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
               if (brightness == Brightness.dark) {
                 theme = AppTheme.dark();
               } else {
