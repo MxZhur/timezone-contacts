@@ -1,16 +1,5 @@
-# timezone_contacts
+# Timezone Contacts
 
-A new Flutter project.
+An app for those who wants to know what time it is for their friends and colleagues all around the globe.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The main difference from a classic time zone converter is that you can save time zones and assign them to the contacts in a built-in, independent contacts list.
